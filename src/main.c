@@ -10,7 +10,7 @@
 #include <string.h>
 
 int main(){
-    char input[MAX_INPUT_SIZE];
+    char input[1024];
 
     setup_signals();
     
