@@ -1,30 +1,60 @@
-#include "commands.h"
-#include "exec.h"
-#include "parser.h"
-#include "signals.h"
-#include "utils.h"
-#include "version.h"
+#include "main.h"
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+int main(int argc, char **argv){
 
-int main(){
-    char input[1024];
 
-    setup_signals();
-    
+    (void)argc, (void)argv;
+    char *buf = NULL, *tok;
+
+    size_t count = 0;
+    ssize_t nread;
+
+    pid_t child_pid;
+    int i, status;
+
+    char **array;
+
     while(1){
-        printf("[%s@%s]=----=> ", get_user(), get_device_name());
-        if (fgets(input, sizeof(input), stdin) == NULL) {
-            perror("Input failed");
-            break;
+        write(STDOUT_FILENO, "Punkshell$ ", 11);
+        nread = getline(&buf, &count, stdin);
+
+        if(nread == -1){
+            
+            perror("[ Exiting punkshell ]");
+            exit(1);
         }
-        input[strcspn(input, "\n")] = 0;
-        if (strcmp(input, "exit") == 0 || strcmp(input, "quit") == 0) {
-            break;
+
+        tok = strtok(buf, " /n");
+        array = malloc(sizeof(char*) * 1024);
+        i = 0;
+
+        while(tok){
+            array[i] = tok;
+            tok = strtok(NULL, " \n");
+            i++;
         }
-        execute_command(input);
+
+        array[i] = NULL;
+
+        child_pid = fork();
+
+        if(child_pid == -1){
+            perror("[ERROR]: Failed to create");
+            exit(41);
+        } else if (child_pid == 0){
+            if (execve(array[0], array, NULL) == -1)
+            {
+                    perror("Failed to execute");
+                    exit(97);
+            }
+        } else{
+            wait(&status);
+        }
+
+        printf("%s", buf);
+
     }
-    return 0;
+    free(buf);
+
+    return (0);
 }

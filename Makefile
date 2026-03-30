@@ -4,7 +4,7 @@ CFLAGS = -Wall -g -Iinclude
 SRC = src/main.c src/commands.c src/exec.c src/parser.c src/utils.c src/signals.c
 OBJ = $(SRC:.c=.o)
 
-TARGET = build/punkshell
+TARGET = build/pksh
 
 RM = rm -f
 MKDIR = mkdir -p

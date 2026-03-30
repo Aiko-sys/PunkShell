@@ -1,10 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
-
-#ifdef _WIN32
-#else
 #include <unistd.h>
-#endif
 
 #include "utils.h"
 
@@ -20,6 +16,7 @@ char* get_device_name(){
         free(hostname);
         return NULL;
     }
+    free(hostname);
     return hostname;
 }
 

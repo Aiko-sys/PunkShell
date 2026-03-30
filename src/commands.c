@@ -5,10 +5,8 @@
 #include "commands.h"
 
 void clear_screen_command() {
-    system("clear");
 }
 
 void set_color_command(const char* color) {
 
-    // TO DO
 }
