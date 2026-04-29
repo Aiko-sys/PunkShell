@@ -24,19 +24,3 @@ At this stage:
 
 This design is expected to evolve into a more structured pipeline:
 input → tokenizer → parser → executor
-
-
-quero implementar X
- → vejo documentação
- → implemento
- → erro
- → debug
- → aprendo de verdade
-
-
-✅ fork + execvp (comando simples)
-✅ tokenizer básico
-✅ built-ins (cd, exit)
-✅ pipes
-✅ redirection
-✅ signals decentes
